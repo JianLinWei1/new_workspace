@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jian.ssm.dao.SysAdminDao" >
+  <resultMap id="BaseResultMap" type="com.jian.ssm.entity.SysAdmin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="NVARCHAR" />
+    <result column="passWord" property="password" jdbcType="NVARCHAR" />
+    <result column="roleId" property="roleid" jdbcType="INTEGER" />
+    <result column="salt" property="salt" jdbcType="NVARCHAR" />
+    <result column="belongId" property="belongid" jdbcType="INTEGER" />
+    <result column="regTime" property="regtime" jdbcType="TIMESTAMP" />
+    <result column="validTime" property="validtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userName, passWord, roleId, salt, belongId, regTime, validTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jian.ssm.entity.SysAdminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jian.ssm.entity.SysAdminExample" >
+    delete from sys_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jian.ssm.entity.SysAdmin" >
+    insert into sys_admin (id, userName, passWord, 
+      roleId, salt, belongId, 
+      regTime, validTime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=NVARCHAR}, #{password,jdbcType=NVARCHAR}, 
+      #{roleid,jdbcType=INTEGER}, #{salt,jdbcType=NVARCHAR}, #{belongid,jdbcType=INTEGER}, 
+      #{regtime,jdbcType=TIMESTAMP}, #{validtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jian.ssm.entity.SysAdmin" >
+    insert into sys_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="password != null" >
+        passWord,
+      </if>
+      <if test="roleid != null" >
+        roleId,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="belongid != null" >
+        belongId,
+      </if>
+      <if test="regtime != null" >
+        regTime,
+      </if>
+      <if test="validtime != null" >
+        validTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=NVARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=NVARCHAR},
+      </if>
+      <if test="belongid != null" >
+        #{belongid,jdbcType=INTEGER},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validtime != null" >
+        #{validtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jian.ssm.entity.SysAdminExample" resultType="java.lang.Integer" >
+    select count(*) from sys_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_admin
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        userName = #{record.username,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.password != null" >
+        passWord = #{record.password,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.roleid != null" >
+        roleId = #{record.roleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.salt != null" >
+        salt = #{record.salt,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.belongid != null" >
+        belongId = #{record.belongid,jdbcType=INTEGER},
+      </if>
+      <if test="record.regtime != null" >
+        regTime = #{record.regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.validtime != null" >
+        validTime = #{record.validtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_admin
+    set id = #{record.id,jdbcType=INTEGER},
+      userName = #{record.username,jdbcType=NVARCHAR},
+      passWord = #{record.password,jdbcType=NVARCHAR},
+      roleId = #{record.roleid,jdbcType=INTEGER},
+      salt = #{record.salt,jdbcType=NVARCHAR},
+      belongId = #{record.belongid,jdbcType=INTEGER},
+      regTime = #{record.regtime,jdbcType=TIMESTAMP},
+      validTime = #{record.validtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jian.ssm.entity.SysAdmin" >
+    update sys_admin
+    <set >
+      <if test="username != null" >
+        userName = #{username,jdbcType=NVARCHAR},
+      </if>
+      <if test="password != null" >
+        passWord = #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="roleid != null" >
+        roleId = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=NVARCHAR},
+      </if>
+      <if test="belongid != null" >
+        belongId = #{belongid,jdbcType=INTEGER},
+      </if>
+      <if test="regtime != null" >
+        regTime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validtime != null" >
+        validTime = #{validtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jian.ssm.entity.SysAdmin" >
+    update sys_admin
+    set userName = #{username,jdbcType=NVARCHAR},
+      passWord = #{password,jdbcType=NVARCHAR},
+      roleId = #{roleid,jdbcType=INTEGER},
+      salt = #{salt,jdbcType=NVARCHAR},
+      belongId = #{belongid,jdbcType=INTEGER},
+      regTime = #{regtime,jdbcType=TIMESTAMP},
+      validTime = #{validtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.jian.ssm.entity.SysAdminExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
